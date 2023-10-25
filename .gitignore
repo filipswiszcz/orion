@@ -1,0 +1,23 @@
+# Compiled class file
+*.class
+
+# Log file
+*.log
+
+# Package files
+*.jar
+!gradle-wrapper.jar
+
+# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
+hs_err_pid*
+replay_pid*
+
+# Ignore Gradle project-specific cache directory
+.gradle
+
+# Ignore Visual Studio Code settings directory
+.vscode
+
+# Ignore Gradle output directories
+bin
+build
