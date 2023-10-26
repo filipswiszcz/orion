@@ -4,7 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.List;
+import java.util.Collection;
 
 import com.mysql.cj.jdbc.MysqlDataSource;
 
@@ -12,11 +12,11 @@ public final class Database {
 
     private final MysqlDataSource dataSource;
 
-    public Database(final String host, final int port,
+    public Database(final String host, final String port,
         final String name, final String user, final String password) {
             this.dataSource = new MysqlDataSource();
             this.dataSource.setUrl(
-                "jdbc:mysql://" + host + ":" + String.valueOf(port) + "/" + name
+                "jdbc:mysql://" + host + ":" + port + "/" + name
             );
             this.dataSource.setUser(user);
             this.dataSource.setPassword(password);
@@ -34,20 +34,16 @@ public final class Database {
         }
     }
 
-    protected ResultSet getSelectedValues(final String statement, final List<Object> parameters) {
-
+    protected ResultSet getSelectedValues(final String statement, final Collection<Object> parameters) {
         final Connection connection = this.getConnection();
-
         try {
             final PreparedStatement preparedStatement = connection.prepareStatement(statement);
-
             if (!parameters.isEmpty()) {
                 int i = 1;
                 for (final Object parameter : parameters) {
                     preparedStatement.setObject(i, parameter); i++;
                 }
             }
-
             return preparedStatement.executeQuery();
         } catch (final SQLException exception) {
             throw new RuntimeException(exception);
@@ -56,13 +52,10 @@ public final class Database {
         }
     }
 
-    protected void executeStatement(final String statement, final List<Object> values) {
-
+    protected void executeStatement(final String statement, final Collection<Object> values) {
         final Connection connection = this.getConnection();
-
         try {
             final PreparedStatement preparedStatement = connection.prepareStatement(statement);
-
             if (!values.isEmpty()) {
                 int i = 1;
                 for (final Object value : values) {
