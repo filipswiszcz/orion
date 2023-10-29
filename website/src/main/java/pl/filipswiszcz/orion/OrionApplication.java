@@ -10,6 +10,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import pl.filipswiszcz.orion.database.Database;
+import pl.filipswiszcz.orion.memory.Repository;
 
 @SpringBootApplication
 public class OrionApplication {
@@ -19,6 +20,11 @@ public class OrionApplication {
 	private static String host, port, name, user, password;
 
 	private static Database database;
+	private static Repository repository;
+
+	private static Manager manager;
+
+	private static boolean debug;
 
 	public static void main(final String[] args) {
 
@@ -44,12 +50,29 @@ public class OrionApplication {
 			"admin",
 			"pass"
 		);*/
+		repository = new Repository();
+		
+		manager = new Manager();
+
+		//manager.initDatabaseTables();
 
 		SpringApplication.run(OrionApplication.class, args);
 	}
 
 	public static Database getDatabase() {
 		return database;
+	}
+
+	public static Repository getRepository() {
+		return repository;
+	}
+
+	public static Manager getManager() {
+		return manager;
+	}
+
+	public static boolean isDebug() {
+		return debug;
 	}
 
 }
