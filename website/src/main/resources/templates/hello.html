@@ -3,8 +3,63 @@
     <head xmlns:th="http://www.thymeleaf.org">
         <title>Hello - Powered by Orion</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <link rel="stylesheet" href="main.css"/>
     </head>
     <body>
         <h2 th:text="|Welcome in the ${world}.|"></h2>
+        <div class="box">
+            <header>orion_init_protocol</header>
+            <div class="content">
+                <p>time is only an illusion.</p>
+            </div>
+        </div>
+        <script>
+
+            const box = document.querySelector(".box");
+            const header = box.querySelector("header");
+            const content = box.querySelector(".content");
+
+            function drag({movementX, movementY}) {
+
+                let style = window.getComputedStyle(box);
+                let left = parseInt(style.left);
+                let top = parseInt(style.top);
+
+                box.style.left = `${left + movementX}px`;
+                box.style.top = `${top + movementY}px`;
+
+            }
+
+            function multiply() {
+
+            }
+
+            header.addEventListener("mousedown", () => {
+                header.classList.add("active");
+                header.addEventListener("mousemove", drag);
+            });
+
+            content.addEventListener("click", () => {
+
+                var parent = document.querySelector(".box");
+                var child = parent.cloneNode(true);
+
+                let left = parseInt(child.style.left);
+                let top = parseInt(child.style.top);
+
+                child.style.left = `${left + 100}px`;
+                child.style.top = `${top + 200}px`;
+                
+
+                document.body.appendChild(child);
+            });
+
+            document.addEventListener("mouseup", () => {
+                header.classList.add("active");
+                header.removeEventListener("mousemove", drag);
+            });
+
+        </script>
     </body>
 </html>
